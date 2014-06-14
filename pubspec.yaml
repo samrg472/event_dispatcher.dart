@@ -1,4 +1,5 @@
 name: event_dispatcher
 version: 0.0.1
 author: samrg472 <samrg472@gmail.com>
+homepage: https://github.com/samrg472/event_dispatcher.dart
 description: An easy to use event dispatching API
