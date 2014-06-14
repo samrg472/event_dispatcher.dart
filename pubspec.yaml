@@ -1,4 +1,4 @@
 name: event_dispatcher
 version: 0.0.1
 author: samrg472 <samrg472@gmail.com>
-description: A sample command-line application
+description: An easy to use event dispatching API
