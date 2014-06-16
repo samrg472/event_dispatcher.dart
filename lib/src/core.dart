@@ -5,13 +5,13 @@ part of event_dispatcher;
  */
 class EventDispatcher {
   
-  final _map = new Map<String, List>();
+  final _map = new Map<String, List<Function>>();
   
   /**
    * Unregisters a method from receiving events.
    * Returns whether the [method] was removed or not.
    */
-  bool unregister(void method(obj)) {
+  bool unregister(void method(dynamic)) {
     var name = _get_name(method: method);
     return _map[name].remove(method);
   }
@@ -20,7 +20,7 @@ class EventDispatcher {
    * Registers a method so that it can start receiving events.
    * Returns false if [method] is already registered, otherwise true.
    */
-  bool register(void method(obj)) {
+  bool register(void method(dynamic)) {
     var name = _get_name(method: method);    
     List methods = _map[name];
     
@@ -41,7 +41,7 @@ class EventDispatcher {
    * Fires an event to registered listeners. Any listeners that take the
    * specific type [obj] will be called.
    */
-  void post(var obj) {
+  void post(dynamic obj) {
     var name = _get_name(obj: obj);
         
     List methods = _map[name];
@@ -51,7 +51,7 @@ class EventDispatcher {
     methods.forEach((m) => m(obj));
   }
   
-  String _get_name({void method(T), var obj}) {
+  String _get_name({void method(dynamic), dynamic obj}) {
     if (method != null) {
       var cm = reflect(method);
       return MirrorSystem.getName(cm.function.parameters.first.type.qualifiedName);
