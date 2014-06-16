@@ -2,9 +2,8 @@ part of event_dispatcher;
 
 /**
  * The controller through which all events communicate with each other.
- * [T] is the base class. All events must extend from [T].
  */
-class EventDispatcher<T> {
+class EventDispatcher {
   
   final _map = new Map<String, List>();
   
@@ -12,7 +11,7 @@ class EventDispatcher<T> {
    * Unregisters a method from receiving events.
    * Returns whether the [method] was removed or not.
    */
-  bool unregister(void method(T)) {
+  bool unregister(void method(obj)) {
     var name = _get_name(method: method);
     return _map[name].remove(method);
   }
@@ -21,7 +20,7 @@ class EventDispatcher<T> {
    * Registers a method so that it can start receiving events.
    * Returns false if [method] is already registered, otherwise true.
    */
-  bool register(void method(T)) {
+  bool register(void method(obj)) {
     var name = _get_name(method: method);    
     List methods = _map[name];
     
@@ -42,7 +41,7 @@ class EventDispatcher<T> {
    * Fires an event to registered listeners. Any listeners that take the
    * specific type [obj] will be called.
    */
-  void post(T obj) {
+  void post(var obj) {
     var name = _get_name(obj: obj);
         
     List methods = _map[name];
@@ -52,7 +51,7 @@ class EventDispatcher<T> {
     methods.forEach((m) => m(obj));
   }
   
-  String _get_name({void method(T), T obj}) {
+  String _get_name({void method(T), var obj}) {
     if (method != null) {
       var cm = reflect(method);
       return MirrorSystem.getName(cm.function.parameters.first.type.qualifiedName);
