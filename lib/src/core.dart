@@ -5,7 +5,7 @@ part of event_dispatcher;
  */
 class EventDispatcher {
   
-  final _map = new Map<String, List<Function>>();
+  final _map = new Map<Symbol, List<Function>>();
   
   /**
    * Unregisters a method from receiving events.
@@ -51,13 +51,13 @@ class EventDispatcher {
     methods.forEach((m) => m(obj));
   }
   
-  String _get_name({void method(dynamic), dynamic obj}) {
+  Symbol _get_name({void method(dynamic), dynamic obj}) {
     if (method != null) {
       var cm = reflect(method);
-      return MirrorSystem.getName(cm.function.parameters.first.type.qualifiedName);
+      return cm.function.parameters.first.type.qualifiedName;
     } else if (obj != null) {
       var cm = reflect(obj);
-      return MirrorSystem.getName(cm.type.qualifiedName);
+      return cm.type.qualifiedName;
     }
     return null;
   }
