@@ -38,5 +38,5 @@ void main() {
 
 class GenericEvent {}
 
-class Event {}
+class Event extends GenericEvent {}
 ```
