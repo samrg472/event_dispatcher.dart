@@ -20,7 +20,9 @@ void main() {
 
   var ed = new EventDispatcher();
   ed.register(g1);
-  ed.register(g2);
+  if (!ed.register(g1))
+    print("g1 was already registered");
+  ed.register(g2, (GenericEvent e) => false);
   ed.register(s1);
   ed.register(s2);
   
@@ -29,8 +31,8 @@ void main() {
   
   print("");
   
-  ed.unregister(g2);
-  ed.unregister(s2);
+  ed.unregister(g2); // Nothing to unregister!
+  ed.unregister(s2); // Unregisters
   
   ed.post(new GenericEvent());
   ed.post(new Event());
