@@ -48,9 +48,12 @@ class EventDispatcher {
     if (filter == null)
       filter = _default_filter;
 
-    List<Function> func = <Function>[method, filter];
+    List<Function> func = new List(2);
     if (_find_functions(method, filter) != null)
       return false;
+
+    func[0] = method;
+    func[1] = filter;
 
     methods.add(func);
     return true;
