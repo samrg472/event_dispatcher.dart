@@ -8,8 +8,9 @@ class EventDispatcher {
   final _map = new Map<Symbol, List<List<Function>>>();
 
   /**
-   * Unregisters a method from receiving events. Must also contain the used
-   * [filter], if any.
+   * Unregisters a [method] from receiving events. If the specific [method]
+   * had a filter, it should be provided in order to properly unregister the
+   * listener.
    * Returns whether the [method] was removed or not.
    */
   bool unregister(void method(dynamic), [bool filter(dynamic)]) {
@@ -40,7 +41,7 @@ class EventDispatcher {
     List methods = _map[name];
 
     if (methods == null) {
-      methods = new List(2);
+      methods = new List();
       _map[name] = methods;
     }
 
