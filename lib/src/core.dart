@@ -13,7 +13,7 @@ class EventDispatcher {
    * listener.
    * Returns whether the [method] was removed or not.
    */
-  bool unregister(void method(dynamic), [bool filter(dynamic)]) {
+  bool unregister(void method(dynamic), {bool filter(dynamic)}) {
     var name = _get_name(method: method);
 
     if (filter == null)
@@ -38,7 +38,7 @@ class EventDispatcher {
    *
    * Returns false if [method] is already registered, otherwise true.
    */
-  bool register(void method(dynamic), [bool filter(dynamic), bool once = false]) {
+  bool register(void method(dynamic), {bool filter(dynamic), bool once : false}) {
     var name = _get_name(method: method);
     List methods = _map[name];
 

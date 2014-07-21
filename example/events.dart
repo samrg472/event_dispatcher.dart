@@ -26,8 +26,8 @@ void main() {
   ed.register(g1);
   if (!ed.register(g1))
     print("g1 was already registered");
-  ed.register(g2, (GenericEvent e) => false);
-  ed.register(g3, null, true);
+  ed.register(g2, filter: (GenericEvent e) => false);
+  ed.register(g3, once: true);
   ed.register(s1);
   ed.register(s2);
 
