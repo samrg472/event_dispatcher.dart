@@ -5,7 +5,7 @@ part of event_dispatcher;
  */
 class EventDispatcher {
 
-  final _map = new Map<Symbol, List<List<Function>>>();
+  final _map = new Map<Symbol, List<List>>();
 
   /**
    * Unregisters a [method] from receiving events. If the specific [method]
@@ -19,7 +19,7 @@ class EventDispatcher {
     if (filter == null)
       filter = _default_filter;
 
-    List<Function> funcs = _find_functions(method, filter);
+    List funcs = _find_functions(method, filter);
     if (funcs == null)
       return false;
     return _map[name].remove(funcs);
@@ -32,11 +32,13 @@ class EventDispatcher {
    * be called. If the [filter] returns true then the [method] will
    * not be called, otherwise it will be called. If no [filter] is
    * provided the [method] will always be called upon posting an
-   * event.
+   * event. [once] is a one time registration. When the [filter] and/or
+   * the [method] gets called, then the [method] will be automatically
+   * unregistered.
    *
    * Returns false if [method] is already registered, otherwise true.
    */
-  bool register(void method(dynamic), [bool filter(dynamic)]) {
+  bool register(void method(dynamic), [bool filter(dynamic), bool once = false]) {
     var name = _get_name(method: method);
     List methods = _map[name];
 
@@ -48,12 +50,13 @@ class EventDispatcher {
     if (filter == null)
       filter = _default_filter;
 
-    List<Function> func = new List(2);
+    List func = new List(3);
     if (_find_functions(method, filter) != null)
       return false;
 
     func[0] = method;
     func[1] = filter;
+    func[2] = once;
 
     methods.add(func);
     return true;
@@ -70,10 +73,12 @@ class EventDispatcher {
     if (methods == null)
       return;
 
-    methods.forEach((List<Function> funcs) {
-      if (!funcs[1](obj))
-        funcs[0](obj);
+    var removal = [];
+    methods.forEach((List funcs) {
+      if (!funcs[1](obj)) funcs[0](obj);
+      if (funcs[2]) removal.add(funcs);
     });
+    removal.forEach((var funcs) => methods.remove(funcs));
   }
 
   /**
