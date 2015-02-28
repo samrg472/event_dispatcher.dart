@@ -1,5 +1,5 @@
 library event_dispatcher;
 
-import 'dart:mirrors';
+import "dart:mirrors";
 
-part 'src/core.dart';
+part "src/core.dart";
