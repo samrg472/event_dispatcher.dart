@@ -6,3 +6,4 @@ docs/
 dartdoc-viewer/
 .settings/
 .project
+.pub
