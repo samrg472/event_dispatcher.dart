@@ -3,3 +3,5 @@ version: 1.0.0
 author: samrg472 <samrg472@gmail.com>
 description: An easy to use event dispatching API
 homepage: https://github.com/samrg472/event_dispatcher.dart
+environment:
+  sdk: ">=1.8.0"
