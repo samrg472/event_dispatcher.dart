@@ -88,10 +88,10 @@ class EventDispatcher {
     }
 
     var name = _getName(handler);
-    if (!_map.containsKey(name)) {
-      _map[name] = <_EventHandler>[];
-    }
     var handlers = _map[name];
+    if (handlers == null) {
+      handlers = _map[name] = <_EventHandler>[];
+    }
 
     var h = new _EventHandler(handler, filter, priority);
     if (handlers.any((it) => it == h)) {
@@ -110,11 +110,12 @@ class EventDispatcher {
   bool post(dynamic event) {
     var name = _getName(event);
 
-    if (!_map.containsKey(name)) {
+    var handlers = _map[name];
+
+    if (handlers == null) {
       return false;
     }
-
-    var handlers = _map[name];
+    
     var executed = false;
     for (var handler in handlers) {
       if (handler.apply(event)) {
