@@ -216,7 +216,7 @@ class EventDispatcher {
   bool post(dynamic event, {bool postDeadEvent: true}) {
     var name = _getName(event);
 
-    if (!_handlers.containsKey(name)) {
+    if (!_handlers.containsKey(name) && postDeadEvent) {
       return post(new DeadEvent(event), postDeadEvent: false);
     }
 
