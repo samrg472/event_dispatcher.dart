@@ -7,7 +7,7 @@ listen to events. Events allow for handling many different parts of
 the codebase without needing to directly call them. The event dispatcher
 does all the calling once an event is posted.
 
-### Annotation-Based Example
+## Annotation-Based Example
 
 ```dart
 import "package:event_dispatcher/event_dispatcher.dart";
