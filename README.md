@@ -131,3 +131,4 @@ void main() {
 class GenericEvent {}
 
 class Event extends GenericEvent {}
+```
